@@ -37,9 +37,9 @@ int main (void)
 
     const float groundHeight = screenHeight-static_cast<float>(groundSprite.height)*1.5f;
     
-    const float initPipeWidth = static_cast<float>(screenWidth)*0.8f;
+    const float initPipeWidth = static_cast<float>(screenWidth)*1.1f;
     float pipeWidth = initPipeWidth;
-    float pipeVelocity = -5.0f;
+    float pipeVelocity = -4.0f;
     const float pipeMinFloat = static_cast<float>(screenHeight) * 0.5f;
     const float pipeMaxFloat = static_cast<float>(screenHeight) * 0.8f;
     float pipeRandomFloatPrecise;
@@ -75,8 +75,9 @@ int main (void)
             DrawTextureEx(chickenHero,(Vector2){chickenWidth,chickenHeight},0.0f,3.0f,WHITE);            
             DrawTextureEx(groundSprite,(Vector2){0,groundHeight},0.0f,2.0f,WHITE);
             DrawTextureEx(groundSprite,(Vector2){static_cast<float>(groundSprite.width),groundHeight},0.0f,2.0f,WHITE);
-            for (const Vector2& pipeElement : pipesVector) 
+            for (const Vector2& pipeElement : pipesVector) {
                 DrawTextureEx(pipeSprite,pipeElement,0.0f,2.0f,WHITE);
+                DrawRectangleV(pipeElement,(Vector2){static_cast<float>(pipeSprite.width)*2.0f,static_cast<float>(pipeSprite.height)*2.0f},RED);}
             DrawRectangle(0,static_cast<int>(groundHeight),screenWidth,static_cast<int>(groundSprite.height*2),BLUE);
             
 
@@ -85,9 +86,11 @@ int main (void)
         chickenVelocity += gravityForce;
         chickenHeight += chickenVelocity;
         for (Vector2& pipeElement : pipesVector) {
-            std::cout << pipeElement.y <<" "<< pipeElement.x<< "\n";
-            pipeElement.x += pipeVelocity;
+            pipeElement.x += pipeVelocity;        
         }
+
+        if (pipesVector.back().x <= static_cast<float>(screenWidth)*0.1f)
+            newPipeTime = true;
 
     
 
