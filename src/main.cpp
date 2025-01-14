@@ -76,6 +76,7 @@ int main (void)
             DrawTextureEx(groundSprite,(Vector2){0,groundHeight},0.0f,2.0f,WHITE);
             DrawTextureEx(groundSprite,(Vector2){static_cast<float>(groundSprite.width),groundHeight},0.0f,2.0f,WHITE);
             for (const Vector2& pipeElement : pipesVector) {
+                DrawCircleV((Vector2){pipeElement.x+static_cast<float>(pipeSprite.width),pipeElement.y-static_cast<float>(pipeSprite.width)*2.0f},chickenColRadius,BLACK);
                 DrawTextureEx(pipeSprite,pipeElement,0.0f,2.0f,WHITE);
                 DrawRectangleV(pipeElement,(Vector2){static_cast<float>(pipeSprite.width)*2.0f,static_cast<float>(pipeSprite.height)*2.0f},RED);}
             DrawRectangle(0,static_cast<int>(groundHeight),screenWidth,static_cast<int>(groundSprite.height*2),BLUE);
@@ -86,11 +87,14 @@ int main (void)
         chickenVelocity += gravityForce;
         chickenHeight += chickenVelocity;
         for (Vector2& pipeElement : pipesVector) {
-            pipeElement.x += pipeVelocity;        
+            pipeElement.x += pipeVelocity;    
         }
 
-        if (pipesVector.back().x <= static_cast<float>(screenWidth)*0.1f)
+        if (pipesVector.back().x <= static_cast<float>(screenWidth)*0.4f)
             newPipeTime = true;
+        
+        if (pipesVector.front().x <= static_cast<float>(-screenWidth))
+            pipesVector.erase(pipesVector.begin());
 
     
 
